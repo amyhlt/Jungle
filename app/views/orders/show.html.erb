@@ -2,12 +2,45 @@
 
   <header class="page-header">
     <h1>Order #<%= @order.id %></h1>
-  </header>
-
-  <div class="order-summary jumbotron">
     <h4>Thank you for your order!</h4>
+  </header>
+  <div class="panel panel-default items">
+   <table class="table table-bordered">
+     <thead>
+      <tr>
+        <th colspan="2">Product</th>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Unit Price</th>
+        <th>Quantity</th>
+        <th>TotalPrice</th>
+      </tr>
+     </thead>
+     <thead>
+     <%  @order.line_items.each do |item| %>
+     <tr>
+     <th colspan="2"><%= image_tag Product.find(item.product_id).image.tiny %></th>
+     <th> <%= Product.find(item.product_id).name   %></th>
+     <th><%= Product.find(item.product_id).description %></th>
+     <th> <%= humanized_money_with_symbol Product.find(item.product_id).price %> </th>
+     <th><%= item.quantity %></th>
+     <th><%= humanized_money_with_symbol  item.quantity*Product.find(item.product_id).price %></th>
+   </tr>
+     <% end %>
+   </thead>
+    <tfoot>
+      <tr>
+        <th colspan="4">
+          TOTAL:
+        </th>
+        <th>
+          <%= humanized_money_with_symbol  @order.total_cents/100.0 %>
+        </th>
+      </tr>
+    </tfoot>
+  </table>
   </div>
-
+  <div class="order-summary jumbotron">   
   <%= link_to "Continue Shopping", root_path, class: 'btn btn-lg btn-primary' %>
-
-</section>
+</div>
+</section>                                                                                                                                                   
