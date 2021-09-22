@@ -7,7 +7,7 @@ Rails.application.routes.draw do
   resources :categories, only: [:show]
 
   resource :cart, only: [:show] do
-    post   :add_item
+    put   :add_item
     post   :remove_item
   end
 
